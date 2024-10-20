@@ -3,9 +3,6 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import getDataUri from "../utils/datauri.js";
 import cloudinary from "../utils/cloudinary.js";
-import crypto from 'crypto';
-// const crypto = require('crypto');
-const secretKey = crypto.randomBytes(32).toString('hex');
 
 export const register = async (req, res) => {
     try {
@@ -54,16 +51,14 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
     try {
         const { email, password, role } = req.body;
-        console.log(req.body)
+        
         if (!email || !password || !role) {
-            // console.log(req.body);
             return res.status(400).json({
                 message: "Something is missing",
                 success: false
             });
         };
         let user = await User.findOne({ email });
-        console.log("user ==>",user)
         if (!user) {
             return res.status(400).json({
                 message: "Incorrect email or password.",
@@ -84,13 +79,11 @@ export const login = async (req, res) => {
                 success: false
             })
         };
-        console.log(user);
+
         const tokenData = {
             userId: user._id
         }
         const token = await jwt.sign(tokenData, process.env.SECRET_KEY, { expiresIn: '1d' });
-        // const token = await jwt.sign(tokenData, secretKey, { expiresIn: '1d' });
-
 
         user = {
             _id: user._id,
@@ -100,7 +93,7 @@ export const login = async (req, res) => {
             role: user.role,
             profile: user.profile
         }
-        
+
         return res.status(200).cookie("token", token, { maxAge: 1 * 24 * 60 * 60 * 1000, httpsOnly: true, sameSite: 'strict' }).json({
             message: `Welcome back ${user.fullname}`,
             user,
