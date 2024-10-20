@@ -23,7 +23,7 @@ app.use(cookieParser());
 const corsOptions = {
     // origin: 'https://job-frontend-nine.vercel.app',  // Replace with your frontend URL
     // origin: 'http://localhost:5173',  // Replace with your frontend URL
-    origin: 'https://job-frontend-pi.vercel.app',
+    origin: 'https://job-frontend-nu.vercel.app',
 
     credentials: true,  // If you're dealing with credentials (cookies, authorization headers)
 };
