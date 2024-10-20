@@ -29,7 +29,8 @@ const corsOptions = {
 };
 
 // Apply the CORS middleware
-app.use(cors())
+// app.use(cors())
+app.use(cors(corsOptions));
 app.use('*',cors(corsOptions));
 
 const PORT = process.env.PORT || 3000;
