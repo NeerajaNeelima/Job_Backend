@@ -51,7 +51,7 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
     try {
         const { email, password, role } = req.body;
-        
+        console.log(req.body)
         if (!email || !password || !role) {
             return res.status(400).json({
                 message: "Something is missing",
@@ -59,6 +59,7 @@ export const login = async (req, res) => {
             });
         };
         let user = await User.findOne({ email });
+        console.log("user ==>",user)
         if (!user) {
             return res.status(400).json({
                 message: "Incorrect email or password.",
